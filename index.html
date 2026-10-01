@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fofinho Clínica Veterinária e Petshop</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Poppins for a friendly, modern look -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            light: '#89CFF0', // Baby Blue
+                            dark: '#000080',  // Navy Blue
+                            accent: '#F9FAFB', // Light gray background
+                            text: '#1F2937',   // Dark gray text
+                            yellow: '#EAB308', // Darker Yellow
+                            purple: '#4C1D95', // Dark Purple
+                            green: '#16A34A',  // Dark Green
+                            blue: '#2563EB',   // Dark Blue
+                            orange: '#F97316', // Playful Orange for accents
+                            pink: '#EC4899'    // Playful Pink for accents
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        '4xl': '2rem',
+                        '5xl': '3rem',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Custom shapes inspired by the reference image */
+        .blob-shape {
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            transition: border-radius 3s ease-in-out;
+        }
+
+        .blob-shape:hover {
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+        }
+
+        /* Styling for the decorative paw prints background */
+        .bg-paws {
+            background-image: url('data:image/svg+xml;utf8,<svg width="60" height="60" viewBox="0 0 24 24" fill="%2389CFF0" opacity="0.05" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C9.243 2 7 4.243 7 7s2.243 5 5 5 5-2.243 5-5-2.243-5-5-5zm-6 9c-1.654 0-3 1.346-3 3s1.346 3 3 3 3-1.346 3-3-1.346-3-3-3zm12 0c-1.654 0-3 1.346-3 3s1.346 3 3 3 3-1.346 3-3-1.346-3-3-3zm-6 4c-3.309 0-6 2.691-6 6v1h12v-1c0-3.309-2.691-6-6-6z"/></svg>');
+        }
+        
+        /* Floating animation for elements */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .float-delay-1 { animation-delay: 1s; }
+        .float-delay-2 { animation-delay: 2s; }
+        .float-delay-3 { animation-delay: 3s; }
+
+        /* Wiggle animation for pet icons */
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-10deg); }
+            50% { transform: rotate(10deg); }
+        }
+        .animate-wiggle:hover {
+            animation: wiggle 0.5s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="font-sans text-brand-text bg-white antialiased selection:bg-brand-light selection:text-brand-dark">
+
+    <header class="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-4 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo area -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="#" class="flex items-center gap-2 group">
+                        <img src="Captura de tela 2026-10-01 170647.png" alt="Logo Fofinho Veterinário" class="h-16 w-auto object-contain group-hover:scale-105 transition-transform" onerror="this.onerror=null; this.outerHTML='<div class=\'flex items-center gap-2\'><div class=\'w-10 h-10 bg-brand-dark rounded-full flex items-center justify-center text-brand-light text-xl\'><i class=\'fa-solid fa-paw\'></i></div><span class=\'font-bold text-2xl tracking-tight text-brand-dark\'>Fofinho<span class=\'text-brand-light\'>Pet</span></span></div>';">
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation Menu -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#inicio" class="text-gray-600 hover:text-brand-dark font-medium transition-colors">Início</a>
+                    <a href="#servicos" class="text-gray-600 hover:text-brand-dark font-medium transition-colors">Serviços</a>
+                    <a href="#clinica" class="text-gray-600 hover:text-brand-dark font-medium transition-colors">Clínica & Petshop</a>
+                    <a href="#unidades" class="text-gray-600 hover:text-brand-dark font-medium transition-colors">Nossas Unidades</a>
+                </nav>
+
+                <!-- Contact & Social Header (Desktop) -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="https://www.instagram.com/fofinhopetshop" target="_blank" class="text-brand-dark hover:text-brand-light transition-colors text-xl">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="#contato" class="bg-brand-dark text-white px-5 py-2 rounded-full font-medium hover:bg-opacity-90 transition-all shadow-md hover:shadow-lg flex items-center gap-2">
+                        <i class="fa-solid fa-phone"></i> Contato
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-brand-dark hover:text-brand-light focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu (hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 absolute w-full shadow-lg">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col items-center">
+                <a href="#inicio" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-brand-dark hover:bg-gray-50 w-full text-center">Início</a>
+                <a href="#servicos" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-brand-dark hover:bg-gray-50 w-full text-center">Serviços</a>
+                <a href="#clinica" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-brand-dark hover:bg-gray-50 w-full text-center">Clínica & Petshop</a>
+                <a href="#unidades" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-brand-dark hover:bg-gray-50 w-full text-center">Nossas Unidades</a>
+                <a href="#contato" class="block w-full mt-2 bg-brand-dark text-white text-center px-5 py-2 rounded-full font-medium">Fale Conosco</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-24 pb-12 bg-paws">
+        <section id="inicio" class="container mx-auto px-4 lg:px-8 py-10 lg:py-16">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                
+                <!-- Left Side: Interactive Form Box (Baby Blue) -->
+                <div class="w-full lg:w-5/12 bg-brand-light rounded-4xl p-8 lg:p-10 shadow-xl relative overflow-hidden transform transition duration-500 hover:-translate-y-2">
+                    <!-- Decorative background element -->
+                    <div class="absolute -top-16 -right-16 w-32 h-32 bg-white opacity-20 rounded-full blur-xl"></div>
+                    
+                    <div class="relative z-10">
+                        <h1 class="text-4xl lg:text-5xl font-extrabold text-brand-dark mb-4 leading-tight">
+                            Amamos <br/>Seus Pets!
+                        </h1>
+                        <p class="text-brand-dark/80 font-medium mb-8">Agende uma consulta ou serviço de banho e tosa hoje mesmo.</p>
+                        
+                        <!-- Mock Booking Form -->
+                        <form class="space-y-4">
+                            <div>
+                                <select class="w-full px-4 py-3 rounded-full bg-white/90 border-transparent focus:ring-2 focus:ring-brand-dark text-gray-700 font-medium outline-none transition-all">
+                                    <option value="" disabled selected>O que seu pet precisa?</option>
+                                    <option value="consulta">Consulta Veterinária</option>
+                                    <option value="banho">Banho e Tosa</option>
+                                    <option value="exame">Exames</option>
+                                    <option value="vacina">Vacinação</option>
+                                </select>
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="w-1/2 relative">
+                                    <input type="text" placeholder="Data (DD/MM)" class="w-full px-4 py-3 rounded-full bg-white/90 border-transparent focus:ring-2 focus:ring-brand-dark text-gray-700 font-medium outline-none transition-all pl-10">
+                                    <i class="fa-regular fa-calendar absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                </div>
+                                <div class="w-1/2 relative">
+                                    <input type="text" placeholder="Horário" class="w-full px-4 py-3 rounded-full bg-white/90 border-transparent focus:ring-2 focus:ring-brand-dark text-gray-700 font-medium outline-none transition-all pl-10">
+                                    <i class="fa-regular fa-clock absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                </div>
+                            </div>
+                            <button type="button" class="w-full mt-4 bg-brand-dark text-white font-bold py-4 rounded-full shadow-lg hover:bg-opacity-90 hover:shadow-xl transition-all uppercase tracking-wider text-sm">
+                                Solicitar Agendamento
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Right Side: Hero Image and Floating Elements -->
+                <div class="w-full lg:w-7/12 relative flex justify-center items-center">
+                    
+                    <!-- Decorative Floating Pet Icons -->
+                    <i class="fa-solid fa-paw text-brand-orange text-4xl absolute top-10 left-4 floating float-delay-1 opacity-70 z-20 transition-transform hover:scale-125 hover:text-brand-pink cursor-pointer"></i>
+                    <i class="fa-solid fa-bone text-brand-green text-3xl absolute bottom-24 left-10 floating float-delay-3 opacity-70 z-20 transition-transform hover:scale-125 cursor-pointer rotate-45"></i>
+                    <i class="fa-solid fa-cat text-brand-purple text-4xl absolute top-20 right-0 floating float-delay-2 opacity-70 z-20 transition-transform hover:scale-125 cursor-pointer"></i>
+                    <i class="fa-solid fa-paw text-brand-yellow text-5xl absolute bottom-10 right-16 floating float-delay-1 opacity-60 z-20 transition-transform hover:scale-125 cursor-pointer -rotate-12"></i>
+
+                    <!-- Text Bubble -->
+                    <div class="absolute top-0 right-10 lg:right-20 bg-white border-2 border-brand-light text-brand-dark font-bold text-xl px-6 py-4 rounded-full shadow-lg floating z-30 animate-wiggle cursor-pointer">
+                        Au Au! <i class="fa-solid fa-heart text-brand-pink"></i>
+                        <!-- Bubble Tail -->
+                        <div class="absolute -bottom-3 left-1/4 w-4 h-4 bg-white border-b-2 border-r-2 border-brand-light transform rotate-45"></div>
+                    </div>
+                    
+                    <!-- Main Image (Using placeholder fitting the theme) -->
+                    <div class="relative z-10 w-full max-w-md mx-auto">
+                        <!-- Blob background -->
+                        <div class="absolute inset-0 bg-brand-dark opacity-10 blob-shape transform scale-105"></div>
+                        <img src="https://i.imgur.com/tHlsMt8.png" alt="Pet Fofinho" class="relative z-10 w-full object-cover rounded-3xl" style="mask-image: radial-gradient(white, black);">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="container mx-auto px-4 lg:px-8 py-12">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <!-- Category 1: Gatos -->
+                <div class="relative rounded-3xl overflow-hidden group h-48 md:h-64 shadow-md hover:shadow-xl hover:shadow-brand-orange/30 transition-all cursor-pointer border-b-4 border-transparent hover:border-brand-orange">
+                    <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Gatos" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 w-full p-4 flex flex-col items-center justify-end">
+                        <div class="bg-brand-light text-brand-dark font-bold py-1 px-6 rounded-full -mb-8 transition-transform duration-300 group-hover:-translate-y-6">
+                            Gatos
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category 2: Cachorros -->
+                <div class="relative rounded-3xl overflow-hidden group h-48 md:h-64 shadow-md hover:shadow-xl hover:shadow-brand-purple/30 transition-all cursor-pointer border-b-4 border-transparent hover:border-brand-purple">
+                    <img src="https://images.unsplash.com/photo-1537151608804-ea2f1ea1f592?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Cachorros" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 w-full p-4 flex flex-col items-center justify-end">
+                        <div class="bg-brand-light text-brand-dark font-bold py-1 px-6 rounded-full -mb-8 transition-transform duration-300 group-hover:-translate-y-6">
+                            Cachorros
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category 3: Especialidades -->
+                <div class="relative rounded-3xl overflow-hidden group h-48 md:h-64 shadow-md hover:shadow-xl hover:shadow-brand-green/30 transition-all cursor-pointer border-b-4 border-transparent hover:border-brand-green">
+                    <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Veterinário examinando pet" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 w-full p-4 flex flex-col items-center justify-end">
+                        <div class="bg-brand-light text-brand-dark font-bold py-1 px-6 rounded-full -mb-8 transition-transform duration-300 group-hover:-translate-y-6 text-center text-sm">
+                            Especialidades
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category 4: Plano Preventivo -->
+                <div class="relative rounded-3xl overflow-hidden group h-48 md:h-64 shadow-md hover:shadow-xl hover:shadow-brand-yellow/30 transition-all cursor-pointer border-b-4 border-transparent hover:border-brand-yellow">
+                    <img src="https://images.unsplash.com/photo-1576201836106-db1758fd1c97?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Pet saudável" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 w-full p-4 flex flex-col items-center justify-end">
+                        <div class="bg-brand-light text-brand-dark font-bold py-1 px-4 rounded-full -mb-8 transition-transform duration-300 group-hover:-translate-y-6 text-center text-xs sm:text-sm">
+                            Plano Preventivo
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="servicos" class="container mx-auto px-4 lg:px-8 py-16">
+            <div class="flex flex-col lg:flex-row gap-12">
+                <!-- Left: Text Content -->
+                <div class="w-full lg:w-5/12 flex flex-col justify-center">
+                    <div class="mb-2 inline-block">
+                        <span class="text-brand-light font-bold text-xl uppercase tracking-wider outline-text flex items-center gap-2" style="-webkit-text-stroke: 1px #89CFF0; color: transparent;">
+                            Serviços <i class="fa-solid fa-paw text-brand-light text-sm" style="-webkit-text-stroke: 0px;"></i>
+                        </span>
+                    </div>
+                    <h2 class="text-4xl font-extrabold text-brand-dark mb-6 relative">
+                        Cuidado Pet <br/>Com Muito Amor
+                        <!-- Decorative bone -->
+                        <i class="fa-solid fa-bone text-brand-yellow text-3xl absolute -top-6 -left-6 opacity-30 -rotate-12"></i>
+                    </h2>
+                    <p class="text-gray-600 leading-relaxed mb-8">
+                        Reunindo petshop com todos os produtos e serviços que seu pet precisa e uma moderna e eficiente clínica veterinária pronta a atender com consultas, exames, internação e cirurgias.
+                    </p>
+
+                    <!-- Service Stats/Bars -->
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between text-sm font-semibold text-brand-dark mb-2">
+                                <span>Clínica Veterinária</span>
+                                <span>100%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-brand-dark h-2 rounded-full" style="width: 100%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm font-semibold text-brand-dark mb-2">
+                                <span>Banho e Tosa</span>
+                                <span>100%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-brand-light h-2 rounded-full" style="width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Service Cards Grid -->
+                <div class="w-full lg:w-7/12 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <!-- Card 1 (Yellow) -->
+                    <div class="bg-brand-accent p-8 rounded-4xl flex flex-col items-center text-center hover:bg-white hover:shadow-xl transition-all duration-300 border border-transparent hover:border-gray-100 group">
+                        <div class="w-20 h-20 rounded-full bg-[#EAB308] flex items-center justify-center mb-6 shadow-md group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-scissors text-3xl text-white"></i>
+                        </div>
+                        <h3 class="font-bold text-xl text-brand-dark mb-2">Banho & Tosa</h3>
+                        <p class="text-sm text-gray-500">Tosas específicas para cada raça e banhos relaxantes.</p>
+                    </div>
+
+                    <!-- Card 2 (Purple) -->
+                    <div class="bg-brand-accent p-8 rounded-4xl flex flex-col items-center text-center hover:bg-white hover:shadow-xl transition-all duration-300 border border-transparent hover:border-gray-100 group">
+                        <div class="w-20 h-20 rounded-full bg-[#9333EA] flex items-center justify-center mb-6 shadow-md group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-stethoscope text-3xl text-white"></i>
+                        </div>
+                        <h3 class="font-bold text-xl text-brand-dark mb-2">Clínica Geral</h3>
+                        <p class="text-sm text-gray-500">Consultas de rotina, vacinas e cuidados essenciais.</p>
+                    </div>
+
+                    <!-- Card 3 (Green) -->
+                    <div class="bg-brand-accent p-8 rounded-4xl flex flex-col items-center text-center hover:bg-white hover:shadow-xl transition-all duration-300 border border-transparent hover:border-gray-100 group">
+                        <div class="w-20 h-20 rounded-full bg-[#16A34A] flex items-center justify-center mb-6 shadow-md group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-bone text-3xl text-white"></i>
+                        </div>
+                        <h3 class="font-bold text-xl text-brand-dark mb-2">Pet Shop</h3>
+                        <p class="text-sm text-gray-500">Rações, acessórios, brinquedos e farmácia veterinária.</p>
+                    </div>
+
+                    <!-- Card 4 (Blue) -->
+                    <div class="bg-brand-accent p-8 rounded-4xl flex flex-col items-center text-center hover:bg-white hover:shadow-xl transition-all duration-300 border border-transparent hover:border-gray-100 group">
+                        <div class="w-20 h-20 rounded-full bg-[#2563EB] flex items-center justify-center mb-6 shadow-md group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-microscope text-3xl text-white"></i>
+                        </div>
+                        <h3 class="font-bold text-xl text-brand-dark mb-2">Exames</h3>
+                        <p class="text-sm text-gray-500">Diagnósticos precisos com laboratório completo.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="clinica" class="py-20 bg-white">
+            <div class="container mx-auto px-4 lg:px-8">
+                
+                <!-- About Section -->
+                <div class="flex flex-col md:flex-row items-center gap-12 mb-20">
+                    <div class="w-full md:w-1/2">
+                        <div class="relative rounded-3xl overflow-hidden shadow-2xl">
+                            <!-- Updated Image -->
+                            <img src="https://i.imgur.com/9A99Mna.png" alt="Instalações Fofinho" class="w-full h-auto object-cover">
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <h2 class="text-3xl md:text-4xl font-extrabold text-brand-dark mb-6 flex items-center flex-wrap">
+                            <i class="fa-solid fa-heart text-brand-pink text-4xl mr-4 animate-pulse"></i> Tradição e Amor <br/>por Animais
+                        </h2>
+                        <p class="text-gray-600 leading-relaxed mb-6">
+                            A Clínica Veterinária Fofinho tem uma história de dedicação à saúde e bem-estar dos animais. Comandada pela fundadora Telma Ferrante e suas filhas, oferecemos um ambiente acolhedor e familiar para você e seu pet.
+                        </p>
+                        <p class="text-gray-600 leading-relaxed">
+                            Nossa equipe de profissionais especializados está pronta para oferecer a melhor estrutura e cuidado, combinando tecnologia avançada com muito carinho.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-brand-accent rounded-[3rem] p-8 md:p-12 mb-20 shadow-lg relative overflow-hidden">
+                    <div class="absolute -top-10 -right-10 w-40 h-40 bg-brand-light rounded-full opacity-20 blur-2xl"></div>
+                    <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-brand-light rounded-full opacity-20 blur-2xl"></div>
+                    
+                    <div class="relative z-10 flex flex-col lg:flex-row items-center gap-10">
+                        <div class="w-full lg:w-1/2 rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
+                            <video controls class="w-full h-auto" poster="https://i.imgur.com/ZELnKcU.mp4#t=0.1">
+                                <source src="https://i.imgur.com/ZELnKcU.mp4" type="video/mp4">
+                                Seu navegador não suporta o elemento de vídeo.
+                            </video>
+                        </div>
+                        <div class="w-full lg:w-1/2">
+                            <h3 class="text-3xl font-extrabold text-brand-dark mb-4">50 Anos de Cuidado & Campanha de Prevenção</h3>
+                            <p class="text-gray-600 leading-relaxed mb-6">
+                                A Dra. Tatiana, médica veterinária da nossa clínica, compartilha uma mensagem especial sobre a nossa trajetória rumo aos <strong>50 anos de existência</strong>, um marco de muito orgulho para a nossa equipe.
+                            </p>
+                            <div class="bg-white p-5 rounded-2xl border-l-4 border-brand-light shadow-sm">
+                                <h4 class="font-bold text-brand-dark mb-2"><i class="fa-solid fa-shield-cat text-brand-light mr-2"></i> Prevenir é o melhor remédio</h4>
+                                <p class="text-sm text-gray-600">
+                                    Neste vídeo, ela também alerta sobre a importância da prevenção contra a <strong>Dirofilariose</strong>, especialmente com a proximidade das viagens de fim de ano. Assista e proteja seu melhor amigo!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-brand-dark mb-4">
+                        <i class="fa-solid fa-notes-medical text-brand-light mr-3"></i>Especialidades e Serviços Clínicos
+                    </h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Estrutura completa e profissionais capacitados para o melhor diagnóstico e tratamento do seu pet.</p>
+                </div>
+
+                <div class="space-y-16">
+                    <!-- Consultas & Exames -->
+                    <div class="grid md:grid-cols-2 gap-12">
+                        <div class="bg-brand-accent rounded-4xl p-8 border border-brand-light/20 hover:shadow-lg transition-shadow relative overflow-hidden group">
+                            <!-- Background watermark pet icon -->
+                            <i class="fa-solid fa-dog absolute -bottom-10 -right-10 text-9xl text-brand-light opacity-5 group-hover:opacity-10 transition-opacity z-0 transform -rotate-12"></i>
+                            
+                            <div class="flex items-center gap-4 mb-6 text-brand-dark relative z-10">
+                                <i class="fa-solid fa-stethoscope text-3xl text-brand-light"></i>
+                                <h3 class="text-2xl font-bold">Consultas</h3>
+                            </div>
+                            <p class="text-gray-600 mb-6">Com uma equipe de profissionais especializados, oferece aos seus clientes ótima estrutura, com diversas especialidades como:</p>
+                            <p class="font-semibold text-brand-dark mb-6 leading-relaxed">
+                                Acupuntura – Dermatologia – Endocrinologia – Odontologia – Ortopedia – Oncologia – Oftalmologia – Cirurgias
+                            </p>
+                            <div class="bg-brand-dark text-white font-medium p-4 rounded-xl inline-block">
+                                <i class="fa-solid fa-bed-pulse mr-2 text-brand-light"></i> Estamos preparados e equipados para internações
+                            </div>
+                        </div>
+
+                        <div class="bg-brand-accent rounded-4xl p-8 border border-brand-light/20 hover:shadow-lg transition-shadow relative overflow-hidden group">
+                            <!-- Background watermark pet icon -->
+                            <i class="fa-solid fa-cat absolute -top-10 -right-4 text-9xl text-brand-light opacity-5 group-hover:opacity-10 transition-opacity z-0 transform rotate-12"></i>
+
+                            <div class="flex items-center gap-4 mb-6 text-brand-dark relative z-10">
+                                <i class="fa-solid fa-microscope text-3xl text-brand-light"></i>
+                                <h3 class="text-2xl font-bold">Exames</h3>
+                            </div>
+                            <p class="text-gray-600 mb-6">Oferecemos analises sanguíneas, como <strong class="text-brand-dark">hemograma, bioquímica renal e hepática, avaliação hormonal, coproparasitologico, analise de urina</strong>, entre outras, realizadas diretamente em uma de nossas unidades, ou encaminhadas aos nossos parceiros.</p>
+                            
+                            <div class="flex justify-center gap-6 mb-6 opacity-60">
+                                <!-- Placeholders for partner logos (Idexx, Animalle) -->
+                                <div class="font-bold text-xl uppercase tracking-widest text-gray-400">IDEXX</div>
+                                <div class="font-bold text-xl uppercase tracking-widest text-gray-400">ANIMALLE</div>
+                            </div>
+                            
+                            <p class="text-sm text-brand-dark font-medium bg-[#EAB308] p-4 rounded-xl">
+                                Oferecemos também, <strong class="text-black">mediante horário agendado</strong>, exame ultrassonográfico, eletrocardiograma, radiografia, ecodopplercardiograma e ultrassom abdominal.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Vacinas & Cirurgias -->
+                    <div class="grid md:grid-cols-2 gap-12">
+                        <div class="bg-white rounded-4xl p-8 shadow-md border border-gray-100 hover:shadow-xl transition-shadow relative overflow-hidden group">
+                            <!-- Background watermark pet icon -->
+                            <i class="fa-solid fa-syringe absolute bottom-1/4 -right-10 text-9xl text-brand-light opacity-5 group-hover:opacity-10 transition-opacity z-0 transform -rotate-45"></i>
+
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-brand-light opacity-10 rounded-bl-full z-0"></div>
+                            <div class="flex items-center gap-4 mb-6 text-brand-dark relative z-10">
+                                <i class="fa-solid fa-syringe text-3xl text-brand-light"></i>
+                                <h3 class="text-2xl font-bold">Vacinas</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4 text-sm">Para os cães as vacinas necessárias são a v8 ou v10... Também podemos prevenir doenças como a giardíase e a traqueobronquite infecciosa canina.</p>
+                            <p class="text-gray-600 mb-6 text-sm">Para os gatos... é importante a vacinação contra a calicivirose, panleucopenia, clamidiose e rinotraqueite felina (vacina quádrupla).</p>
+                            
+                            <div class="bg-brand-dark p-5 rounded-2xl text-white">
+                                <h4 class="font-bold text-brand-light mb-3 text-sm">Esquema de vacinação para filhotes:</h4>
+                                <ul class="space-y-2 text-sm text-white/90">
+                                    <li class="flex items-start gap-2"><i class="fa-solid fa-paw text-brand-light mt-1 text-xs"></i> <span>Aos 45-60 dias primeira dose (v8/v10 ou quádrupla) e mais duas doses com intervalo de 30 dias.</span></li>
+                                    <li class="flex items-start gap-2"><i class="fa-solid fa-paw text-brand-light mt-1 text-xs"></i> <span>A partir do 4º mês, vacina anti-rábica.</span></li>
+                                    <li class="flex items-start gap-2"><i class="fa-solid fa-paw text-brand-light mt-1 text-xs"></i> <span>Para animais adultos o reforço é anual.</span></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-4xl p-8 shadow-md border border-gray-100 hover:shadow-xl transition-shadow relative overflow-hidden group">
+                            <!-- Background watermark pet icon -->
+                            <i class="fa-solid fa-shield-dog absolute top-1/4 -left-10 text-9xl text-brand-light opacity-5 group-hover:opacity-10 transition-opacity z-0 transform rotate-12"></i>
+
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-brand-light opacity-10 rounded-bl-full z-0"></div>
+                            <div class="flex items-center gap-4 mb-6 text-brand-dark relative z-10">
+                                <i class="fa-solid fa-scalpel text-3xl text-brand-light"></i>
+                                <h3 class="text-2xl font-bold">Cirurgias</h3>
+                            </div>
+                            <p class="text-gray-600 mb-6 text-sm">Com profissionais especializados, tanto em cirurgia como em anestesia, e um complexo cirúrgico com equipamentos modernos para:</p>
+                            
+                            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-gray-600">
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-paw text-brand-light text-xs"></i> esterilização dos materiais</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-paw text-brand-light text-xs"></i> sala de preparo e centro cirúrgico com monitoração cardíaca</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-paw text-brand-light text-xs"></i> pressão arterial</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-paw text-brand-light text-xs"></i> oximetria de pulso</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-paw text-brand-light text-xs"></i> aferição da temperatura</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-paw text-brand-light text-xs"></i> capnografia</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-paw text-brand-light text-xs"></i> analisador de gases</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-paw text-brand-light text-xs"></i> anestesia inalatória</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-paw text-brand-light text-xs"></i> bombas de infusão</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Tratamento com Células Tronco -->
+                    <div class="bg-gradient-to-r from-brand-dark to-[#000050] rounded-[3rem] p-8 md:p-12 text-white shadow-2xl relative overflow-hidden">
+                        <!-- Decorative bg -->
+                        <div class="absolute -top-24 -right-24 w-64 h-64 bg-brand-light/20 rounded-full blur-3xl"></div>
+                        
+                        <div class="relative z-10 flex flex-col lg:flex-row gap-10 items-center">
+                            <div class="lg:w-2/3">
+                                <div class="flex items-center gap-4 mb-6">
+                                    <div class="bg-brand-light text-brand-dark p-3 rounded-full">
+                                        <i class="fa-solid fa-dna text-2xl"></i>
+                                    </div>
+                                    <h3 class="text-2xl md:text-3xl font-bold">Tratamento com Células Tronco</h3>
+                                </div>
+                                
+                                <p class="text-white/90 mb-6 leading-relaxed text-sm md:text-base">
+                                    A Clínica Veterinária Fofinho, em parceria com a <strong class="text-brand-light">Regenera Stem Cells</strong> e a <strong class="text-brand-light">PetMep</strong>, está realizando tratamento com células tronco para as seguintes patologias em cães e gatos:
+                                </p>
+                                
+                                <div class="grid sm:grid-cols-2 gap-4 text-sm text-white/80 mb-6">
+                                    <ul class="space-y-2 list-disc list-inside marker:text-brand-light">
+                                        <li>Sequelas da Cinomose (cães)</li>
+                                        <li>Osteoartrites e Osteoartroses</li>
+                                        <li class="ml-4 text-xs">Falhas Ósseas</li>
+                                        <li>Aplasia e Hipoplasia de Medula</li>
+                                    </ul>
+                                    <ul class="space-y-2 list-disc list-inside marker:text-brand-light">
+                                        <li>Doença Renal Aguda e Crônica</li>
+                                        <li>Ceratoconjutivite Seca / Úlcera</li>
+                                        <li>Traumas Medulares (Discopatias)</li>
+                                        <li>Atopia</li>
+                                    </ul>
+                                </div>
+                                <p class="text-white/70 text-xs italic border-l-2 border-brand-light pl-4">
+                                    As células tronco adultas possuem uma propriedade que as tornam capazes de modular o sistema imune, e desta forma não induzem a rejeição. Elas são utilizadas para substituir ou reparar células e tecidos danificados do organismo.
+                                </p>
+                            </div>
+                            
+                            <div class="lg:w-1/3 flex flex-col items-center justify-center gap-6 bg-white/10 p-8 rounded-3xl backdrop-blur-sm border border-white/20">
+                                <div class="text-center font-bold text-xl mb-2 text-brand-light">Nossos Parceiros</div>
+                                <!-- Placeholders for partner logos -->
+                                <div class="flex gap-4 items-center opacity-80">
+                                    <div class="text-center">
+                                        <i class="fa-solid fa-tree text-3xl mb-1"></i><br><span class="text-xs">REGENERA</span>
+                                    </div>
+                                    <div class="text-2xl font-light">|</div>
+                                    <div class="text-center">
+                                        <i class="fa-solid fa-plus-square text-3xl mb-1 text-orange-400"></i><br><span class="text-xs">PET MEP</span>
+                                    </div>
+                                </div>
+                                <a href="https://wa.me/5511991352228" target="_blank" class="mt-4 w-full bg-brand-light text-brand-dark text-center font-bold py-3 rounded-full hover:bg-white transition-colors">
+                                    Tire suas Dúvidas
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="container mx-auto px-4 lg:px-8 py-10">
+            <div class="bg-brand-dark rounded-[3rem] p-10 md:p-16 relative overflow-hidden text-center shadow-2xl">
+                <!-- Background decorative shapes -->
+                <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
+                    <div class="absolute -top-20 -left-20 w-64 h-64 bg-brand-light rounded-full opacity-20 blur-3xl"></div>
+                    <div class="absolute -bottom-20 -right-20 w-80 h-80 bg-brand-light rounded-full opacity-20 blur-3xl"></div>
+                </div>
+
+                <div class="relative z-10 max-w-2xl mx-auto">
+                    <i class="fa-solid fa-paw text-brand-yellow text-5xl absolute -top-10 -left-10 opacity-60 -rotate-12 animate-bounce"></i>
+                    <i class="fa-solid fa-bone text-brand-pink text-4xl absolute -bottom-4 -right-10 opacity-60 rotate-45 floating"></i>
+
+                    <h2 class="text-brand-light font-bold text-2xl md:text-3xl uppercase tracking-widest mb-4 opacity-90">Programa Preventivo</h2>
+                    <h3 class="text-4xl md:text-5xl font-extrabold text-white mb-6 leading-tight">Saúde e Prevenção <br/>para seu melhor amigo</h3>
+                    <p class="text-white/80 mb-10 text-lg">
+                        Conheça nosso programa preventivo de saúde. Com exames de rotina, descobrimos tudo isso a tempo.
+                    </p>
+                    
+                    <a href="https://wa.me/5511991352228" target="_blank" class="inline-block bg-brand-light text-brand-dark font-bold text-lg py-4 px-10 rounded-full shadow-lg hover:bg-white transition-all transform hover:scale-105">
+                        <i class="fa-brands fa-whatsapp mr-2 text-green-600"></i> Fale com um Especialista
+                    </a>
+                </div>
+
+                <!-- Decorative Chat Bubble -->
+                <div class="absolute top-10 right-10 hidden lg:block">
+                    <!-- Smaller bubbles forming a trail -->
+                    <div class="absolute -left-10 -top-6 w-8 h-4 bg-brand-light rounded-full opacity-80"></div>
+                    <div class="absolute -left-4 top-0 w-12 h-6 bg-brand-light rounded-full opacity-90"></div>
+                    <!-- Main Bubble -->
+                    <div class="bg-brand-light text-brand-dark font-extrabold text-xl px-8 py-6 rounded-[3rem] shadow-xl transform rotate-12 flex items-center justify-center animate-wiggle">
+                        Prevenir é <br/>Amar! <i class="fa-solid fa-heart text-brand-pink ml-2"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="unidades" class="container mx-auto px-4 lg:px-8 py-16 bg-brand-accent/50 rounded-4xl mt-12 relative overflow-hidden">
+            <!-- Decorative background paws for the units section -->
+            <i class="fa-solid fa-paw absolute top-10 left-10 text-brand-light opacity-10 text-8xl -rotate-12"></i>
+            <i class="fa-solid fa-paw absolute bottom-10 right-10 text-brand-light opacity-10 text-8xl rotate-12"></i>
+
+            <div class="text-center mb-12 relative z-10">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-brand-dark mb-4">
+                    <i class="fa-solid fa-map-location-dot text-brand-orange mr-3"></i>Nossas Unidades
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Estamos localizados em pontos estratégicos de São Paulo para melhor atender você e seu pet.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Loja Tatuapé -->
+                <div class="bg-white p-8 rounded-3xl shadow-md border border-gray-100 hover:shadow-xl transition-shadow">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-14 h-14 bg-brand-light/20 text-brand-dark rounded-full flex items-center justify-center text-2xl">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-brand-dark">Loja Tatuapé</h3>
+                    </div>
+                    
+                    <ul class="space-y-4 text-gray-600">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot mt-1 text-brand-light"></i>
+                            <span>Rua Francisco Marengo, 1045<br/>Tatuapé - São Paulo</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-clock mt-1 text-brand-light"></i>
+                            <span>Seg a Sex das 8h às 20h<br/>Sáb das 8h às 17h</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-phone text-brand-light"></i>
+                            <span>11 2296-8373 | 11 2294-8184</span>
+                        </li>
+                        <li class="flex items-center gap-3 font-semibold text-brand-dark">
+                            <i class="fa-brands fa-whatsapp text-green-500 text-lg"></i>
+                            <span>11 99135-2228</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Loja Vila Matilde -->
+                <div class="bg-white p-8 rounded-3xl shadow-md border border-gray-100 hover:shadow-xl transition-shadow">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-14 h-14 bg-brand-light/20 text-brand-dark rounded-full flex items-center justify-center text-2xl">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-brand-dark">Loja Vila Matilde</h3>
+                    </div>
+                    
+                    <ul class="space-y-4 text-gray-600">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot mt-1 text-brand-light"></i>
+                            <span>Av. Marcondes de Brito, 1296<br/>Vila Matilde - São Paulo</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-clock mt-1 text-brand-light"></i>
+                            <span>Seg a Sex das 8h às 20h<br/>Sáb das 8h às 17h</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-phone text-brand-light"></i>
+                            <span>11 2651-8294 | 11 2651-0914</span>
+                        </li>
+                        <li class="flex items-center gap-3 font-semibold text-brand-dark">
+                            <i class="fa-brands fa-whatsapp text-green-500 text-lg"></i>
+                            <span>11 99135-1739</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contato" class="bg-brand-dark text-white pt-16 pb-8">
+        <div class="container mx-auto px-4 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
+                <!-- Brand Col -->
+                <div>
+                    <div class="flex items-center gap-2 mb-6">
+                        <div class="bg-white p-2 rounded-2xl shadow-lg inline-block">
+                            <img src="Captura de tela 2026-10-01 170647.png" alt="Logo Fofinho Veterinário" class="h-16 w-auto object-contain" onerror="this.onerror=null; this.outerHTML='<div class=\'flex items-center gap-2\'><div class=\'w-10 h-10 bg-brand-dark rounded-full flex items-center justify-center text-brand-light text-xl\'><i class=\'fa-solid fa-paw\'></i></div><span class=\'font-bold text-2xl tracking-tight text-brand-dark\'>Fofinho<span class=\'text-brand-light\'>Pet</span></span></div>';">
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-6 text-sm leading-relaxed">
+                        Reunindo petshop com todos os produtos e serviços que seu pet precisa e uma moderna e eficiente clínica veterinária.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.instagram.com/fofinhopetshop" target="_blank" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-light hover:text-brand-dark transition-colors">
+                            <i class="fa-brands fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-light hover:text-brand-dark transition-colors">
+                            <i class="fa-brands fa-facebook-f text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Links Col -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-brand-light">Links Rápidos</h4>
+                    <ul class="space-y-3 text-gray-300 text-sm">
+                        <li><a href="#inicio" class="hover:text-white transition-colors">Início</a></li>
+                        <li><a href="#servicos" class="hover:text-white transition-colors">Clínica Veterinária</a></li>
+                        <li><a href="#servicos" class="hover:text-white transition-colors">Petshop</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Especialidades</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Programa Preventivo</a></li>
+                    </ul>
+                </div>
+
+                <!-- Working with us Col -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-brand-light">Trabalhe Conosco</h4>
+                    <p class="text-gray-300 text-sm mb-4">Faça parte da nossa equipe apaixonada por pets!</p>
+                    <a href="#" class="inline-flex items-center gap-2 border border-brand-light text-brand-light hover:bg-brand-light hover:text-brand-dark px-6 py-2 rounded-full text-sm font-medium transition-colors">
+                        Envie seu currículo <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-400">
+                <p>&copy; 2026 - Fofinho Veterinário. Todos os direitos reservados.</p>
+                <p class="mt-2 md:mt-0">Criado com <i class="fa-solid fa-heart text-red-500"></i> para pets</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile Menu Toggle
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+            });
+
+            // Close mobile menu when clicking a link
+            const mobileLinks = menu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    menu.classList.add('hidden');
+                });
+            });
+
+            // Navbar scroll effect
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 20) {
+                    navbar.classList.add('shadow-md');
+                    navbar.classList.replace('bg-white/90', 'bg-white');
+                } else {
+                    navbar.classList.remove('shadow-md');
+                    navbar.classList.replace('bg-white', 'bg-white/90');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
